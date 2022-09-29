@@ -5,7 +5,6 @@ import uuid
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,8 +14,11 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Item',
             fields=[
-                ('id', models.UUIDField(default=uuid.uuid4, help_text='Unique ID for this particular book across whole library', primary_key=True, serialize=False)),
-                ('name', models.CharField(help_text='Item name', max_length=255)),
+                ('id',
+                 models.UUIDField(default=uuid.uuid4,
+                                  help_text='Unique ID for this particular book across whole library',
+                                  primary_key=True, serialize=False)),
+                ('name', models.CharField(help_text='Item name', max_length=255)),  # noqa
                 ('price', models.DecimalField(decimal_places=2, max_digits=5)),
             ],
         ),
