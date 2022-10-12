@@ -6,6 +6,8 @@ from django.db import models
 from django.urls import reverse
 import uuid
 
+from django.utils.safestring import mark_safe
+
 from mixins.models_mixins import PKMixin
 
 
@@ -20,7 +22,7 @@ class Category(PKMixin):
 
 class Item(PKMixin):
     def __str__(self):
-        return self.name
+        return f" {self.name} | {self.category} "
 
     def get_absolute_url(self):
         return reverse('item-detail', args=[str(self.id)])
@@ -30,27 +32,20 @@ class Item(PKMixin):
     description = models.CharField(max_length=255, default='Description', help_text='Item description')
     image = models.ImageField(upload_to='Images', default='default.jpg')
 
+    @property
+    def image_preview(self):
+        if self.image:
+            return mark_safe('<img src="{}" width="300" height="300" />'.format(self.image.url))
+        return ""
+
 
 class Product(PKMixin):
     def __str__(self):
-        return self.id
+        return self.name
 
+    name = models.CharField(max_length=255, help_text='Product name')
     price = models.PositiveIntegerField(default=0)
     sku = models.CharField(max_length=255)
     items = models.ManyToManyField(Item)
 
 
-class Discount(PKMixin):
-    def __str__(self):
-        return self.id
-
-    amount = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
-    code = models.CharField(max_length=255, default='Code')
-    is_active = models.BooleanField(default=True)
-    discount_type = models.BooleanField(default=0)
-
-
-class Order(PKMixin):
-    products = models.ManyToManyField(Product)
-    total_amount = models.PositiveIntegerField(default=0)
-    user = models.ManyToManyField(User)

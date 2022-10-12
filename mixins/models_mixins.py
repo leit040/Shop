@@ -9,10 +9,8 @@ class PKMixin(models.Model):
                           default=uuid.uuid4,
                           help_text="Unique ID",
                           editable=False)
-    create_at = models.DateTimeField(default=datetime.now(),
-                                     blank=True)
-    update_at = models.DateTimeField(default=datetime.now(),
-                                     blank=True)
+    create_at = models.DateTimeField(auto_now_add=True)
+    update_at = models.DateTimeField(auto_now=True)
     description = models.CharField(max_length=255,
                                    default='Description',
                                    help_text='Description')
