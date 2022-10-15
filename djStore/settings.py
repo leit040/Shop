@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'items.apps.ItemsConfig',
     'orders.apps.OrdersConfig',
+    'feedbacks.apps.FeedbacksConfig',
+    'users.apps.UsersConfig',
 
 ]
 
@@ -132,3 +134,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+LOGIN_URL = '/signup/login/'
+LOGIN_REDIRECT_URL = '/feedbacks/'
+LOGOUT_REDIRECT_URL = '/signup/login/'

@@ -1,9 +1,6 @@
-
 from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
-
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -12,6 +9,15 @@ urlpatterns = [
 urlpatterns += [
     path('items/', include('items.urls')),
 ]
+
+urlpatterns += [
+    path('feedbacks/', include('feedbacks.urls')),
+]
+
+urlpatterns += [
+    path('signup/', include('users.urls')),
+]
+
 if settings.DEBUG:
     from django.conf.urls.static import static
 
