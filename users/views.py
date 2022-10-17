@@ -21,7 +21,10 @@ class Registration(TemplateView):
         if form.is_valid():
             username = form.cleaned_data['email'].split('@')[0]
             email = form.cleaned_data['email']
-            user = User.objects.create_user(username, email, is_active=True, is_staff=False, is_superuser=False)
+            user = User.objects.create_user(username, email,
+                                            is_active=True,
+                                            is_staff=False,
+                                            is_superuser=False)
             user.set_password(form.cleaned_data['password'])
             user.save()
             login(request, user)

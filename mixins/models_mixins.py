@@ -1,4 +1,5 @@
 import uuid
+from os import path
 
 from django.contrib.auth import get_user_model
 from django.db import models
@@ -26,8 +27,14 @@ class Description(models.Model):
         abstract = True
 
 
+def upload_image(instance, filename):
+    _name, extension = path.splitext(filename)
+    return f'images/{instance.__class__.__name__.lower()}/' \
+           f'{instance.pk}/image{extension}'
+
+
 class Image(models.Model):
-    image = models.ImageField(upload_to='Images', default='default.jpg')
+    image = models.ImageField(upload_to=upload_image)
 
     @property
     def image_preview(self):

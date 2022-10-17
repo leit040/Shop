@@ -10,7 +10,8 @@ class Discount(PKMixin, Description):
     def __str__(self):
         return self.code
 
-    amount = models.PositiveIntegerField(default=1, validators=[MinValueValidator(1)])
+    amount = models.PositiveIntegerField(default=1,
+                                         validators=[MinValueValidator(1)])
     code = models.CharField(max_length=32)
     is_active = models.BooleanField(default=True)
     discount_type = models.SmallIntegerField(DiscountTypes.choices,
@@ -29,8 +30,6 @@ class Order(PKMixin, UserModel):
 
     def getTotalAmount(self):
         amount = self.products.aggregate(sum=Sum('price')).get('sum')
-        # amount = sum(self.products.all().aggregate(Sum('price')))
-        # изменил, но не понял. просьба ели будет возможность на уроке акцент на этом сделать
         order_discount = self.discount
         if order_discount:
             if order_discount.discount_type == 0:
